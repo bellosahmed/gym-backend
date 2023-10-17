@@ -3,32 +3,32 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        //required: true
     },
     email: {
         type: String,
-        required: true,
+        // required: true,
         unique: true
     },
     username: {
         type: String,
-        required: true,
+        //required: true,
         unique: true,
         lowercase: true
     },
     password: {
         type: String,
-        required: true,
+        // required: true,
         minlenght: 5
     },
     height: {
-        type: String
+        type: Number
     },
     weight: {
-        type: String
+        type: Number
     },
     age: {
-        type: String
+        type: Number
     },
     dob: {
         type: Date
@@ -44,6 +44,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['user', 'admin'],
         default: "user"
+    },
+    bloodgroup: {
+        type: String
     }
 }, { timestamps: true });
 
