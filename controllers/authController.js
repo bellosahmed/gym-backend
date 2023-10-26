@@ -1,10 +1,11 @@
 const User = require('../models/user');
 const { tokenandcookies } = require('../utilis/jwtandcookies');
+const jwt = require('jsonwebtoken');
 
 //Signup User
 const usersignup = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username, email, password } = req.body;
         const user = await User.findOne({ $or: [{ username }] });
 
         if (user) {
@@ -13,6 +14,7 @@ const usersignup = async (req, res) => {
 
         const newUser = new User({
             username,
+            email,
             password
         });
 
@@ -23,6 +25,7 @@ const usersignup = async (req, res) => {
         res.status(201).json({
             _id: newUser._id,
             username: newUser.username,
+            email: newUser.email,
             password: newUser.password
         });
     } catch (error) {
@@ -31,6 +34,7 @@ const usersignup = async (req, res) => {
     }
 };
 
+//Login User
 const userlogin = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -54,15 +58,17 @@ const userlogin = async (req, res) => {
     }
 };
 
+//Logout 
 const userlogout = async (req, res) => {
     try {
-        res.cookie("jwt", "loggedout",);
+        res.cookie("jwt", "", { MaxAge: 1 });
         res.status(200).json({ message: 'User logged out' });
     } catch (error) {
         res.status(500).json({ message: error.message });
         console.log("Error in Logout: ", error.message);
     }
 };
+
 
 
 module.exports = { usersignup, userlogin, userlogout };

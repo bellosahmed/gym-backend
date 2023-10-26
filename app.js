@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 
 const db = require('./db');
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(cookieParser());
 
 //Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 
 const port = process.env.PORT || 1111;
 
