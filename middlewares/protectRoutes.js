@@ -24,8 +24,20 @@ const protectRoutes = async (req, res, next) => {
 };
 
 
-//Restrict User
+// Admin Routes 
+
+const adminRoutes = async (req, res, next) => {
+    try {
+        if (req.user.role == 'admin' || req.user.role == 'super-admin') {
+            next();
+        } else {
+            res.status(401).json({ message: 'not allowed' })
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+        console.log("Error in admin routes middlewares: ", error.message);
+    }
+};
 
 
-
-module.exports = { protectRoutes };
+module.exports = { protectRoutes, adminRoutes };

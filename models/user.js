@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+let uniqueValidator = require('mongoose-unique-validator');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -42,12 +43,15 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['user', 'admin'],
+        enum: ['user', 'admin', 'super-admin'],
+        message: '{VALUE} is not supported',
         default: "user"
     },
     bloodgroup: {
         type: String
     }
 }, { timestamps: true });
+
+userSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('Users', userSchema);

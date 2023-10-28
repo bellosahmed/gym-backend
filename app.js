@@ -5,11 +5,13 @@ const cookieParser = require('cookie-parser');
 const db = require('./db');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const superAdmin = require('./seeders/admin');
 
 
 dotenv.config();
 db();
 const app = express();
+superAdmin();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

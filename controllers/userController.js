@@ -36,6 +36,7 @@ const updateProfile = async (req, res) => {
     }
 };
 
+// Delete User
 const deleteUser = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
