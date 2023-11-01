@@ -1,1 +1,0 @@
-const Gymstores = require('../models/gymstore');
