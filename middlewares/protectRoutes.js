@@ -18,8 +18,8 @@ const protectRoutes = async (req, res, next) => {
         }
 
         req.user = user;
-        console.log("Decoded Token:", decoded);
-        console.log("User Object:", req.user);
+        // console.log("Decoded Token:", decoded);
+        // console.log("User Object:", req.user);
 
         next();
     } catch (error) {

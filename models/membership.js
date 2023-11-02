@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const membershipSchema = new mongoose.Schema({
     name: {
         type: String
-
     },
     price: {
         type: String,
@@ -11,6 +10,6 @@ const membershipSchema = new mongoose.Schema({
     summary: {
         type: String
     }
-}, { timeseries: true });
+}, { timestamps: true });
 
 module.exports = mongoose.model('Membership', membershipSchema);
