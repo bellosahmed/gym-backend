@@ -7,6 +7,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const superAdmin = require('./seeders/admin');
 const membershipRoutes = require('./routes/membershipRoutes');
+const gymstoreRoutes = require('./routes/gymstoreRoutes');
 
 dotenv.config();
 db();
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/member', membershipRoutes);
+app.use('/api/store', gymstoreRoutes);
 
 const port = process.env.PORT || 1111;
 

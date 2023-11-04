@@ -8,7 +8,7 @@ const createMember = async (req, res) => {
             return res.status(400).json({ message: 'Please fill all fields' });
         }
 
-        let membership = await Membership.findOne({ name });
+        let membership = await Membership.findOne({ _id: req.params.id });
 
         if (membership) {
             return res.status(400).json({ message: 'Membership Already created' })
@@ -81,7 +81,21 @@ const deleteMembership = async (req, res) => {
     }
 };
 
+// Get Memberplan by Id
+const getidmembership = async (req, res) => {
+    try {
+        const membership = await Membership.findById(req.params.id);
+        if (!membership) {
+            return res.status(404).json(' Plan does not exist');
+        }
+        res.status(200).json({ membership });
+    } catch (error) {
+        console.error('Error in membership plan get id', error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Purchase Membership Plan
 
 
-module.exports = { createMember, updateMembership, getMembership, deleteMembership };
+module.exports = { createMember, updateMembership, getMembership, deleteMembership, getidmembership };
