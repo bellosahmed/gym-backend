@@ -1,10 +1,11 @@
 const User = require('../models/user');
 
 
+// User can get their profile  
 const userProfile = async (req, res) => {
-    const { username } = req.params;
+    const userId = req.params.id;
     try {
-        const user = await User.findOne({ username }).select('-password');
+        const user = await User.findById(userId);
         if (!user) return res.status(400).json({ message: "User not found" });
         res.status(200).json(user);
     } catch (error) {
@@ -12,6 +13,7 @@ const userProfile = async (req, res) => {
         console.log("Error in user Profile", error.message);
     }
 };
+
 
 // Update Profile
 const updateProfile = async (req, res) => {
@@ -55,4 +57,24 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { userProfile, updateProfile, deleteUser };
+// Admin can get every user
+const getAllUsersExceptAdmin = async (req, res) => {
+    try {
+        const requestingUserId = req.userId; // Assuming you've set the userId in the request during authentication
+        const users = await User.find({ _id: { $ne: requestingUserId }, role: { $nin: ['admin', 'super-admin'] } }).select('-password');
+
+        // If no users found, handle accordingly (send a 404 response, for example)
+        if (!users || users.length === 0) {
+            return res.status(404).json({ message: 'No users found except admin and super-admin' });
+        }
+
+        // Send the list of users (excluding admin and super-admin) in the response
+        res.status(200).json(users);
+    } catch (error) {
+        // Handle errors (send a 500 response with an error message, for example)
+        console.error('Error retrieving users:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+module.exports = { userProfile, updateProfile, deleteUser, getAllUsersExceptAdmin };
