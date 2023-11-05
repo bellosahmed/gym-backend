@@ -101,5 +101,9 @@ const getidmembership = async (req, res) => {
 // Get monthly income for membership
 
 
+// Once membership is done dont forget to implement a countdown time that will impact the user
+
+
+// Admin can get users membership and see the countdown
 
 module.exports = { createMember, updateMembership, getMembership, deleteMembership, getidmembership };

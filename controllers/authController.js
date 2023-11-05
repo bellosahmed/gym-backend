@@ -76,4 +76,7 @@ const userlogout = async (req, res) => {
 
 
 
+// should i include otp to improve security
+
+
 module.exports = { usersignup, userlogin, userlogout };

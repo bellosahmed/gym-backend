@@ -103,4 +103,7 @@ const deletegymstore = async (req, res) => {
 
 // Get monthly income in gymstores
 
+
+// Admin can get users membership
+
 module.exports = { creategymstore, getgymstore, deletegymstore, updategymstore, getidgymstore };
