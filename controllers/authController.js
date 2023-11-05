@@ -69,6 +69,11 @@ const userlogout = async (req, res) => {
     }
 };
 
+// forgot password
+
+
+// reset password
+
 
 
 module.exports = { usersignup, userlogin, userlogout };

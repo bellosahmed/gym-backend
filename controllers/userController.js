@@ -60,21 +60,22 @@ const deleteUser = async (req, res) => {
 // Admin can get every user
 const getAllUsersExceptAdmin = async (req, res) => {
     try {
-        const requestingUserId = req.userId; // Assuming you've set the userId in the request during authentication
+        const requestingUserId = req.userId;
         const users = await User.find({ _id: { $ne: requestingUserId }, role: { $nin: ['admin', 'super-admin'] } }).select('-password');
 
-        // If no users found, handle accordingly (send a 404 response, for example)
         if (!users || users.length === 0) {
             return res.status(404).json({ message: 'No users found except admin and super-admin' });
         }
-
-        // Send the list of users (excluding admin and super-admin) in the response
         res.status(200).json(users);
     } catch (error) {
-        // Handle errors (send a 500 response with an error message, for example)
         console.error('Error retrieving users:', error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+
+// Should admin view user's profile
+
+
+// Admin can view all users created last month
 
 module.exports = { userProfile, updateProfile, deleteUser, getAllUsersExceptAdmin };

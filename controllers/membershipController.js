@@ -98,4 +98,8 @@ const getidmembership = async (req, res) => {
 // Purchase Membership Plan
 
 
+// Get monthly income for membership
+
+
+
 module.exports = { createMember, updateMembership, getMembership, deleteMembership, getidmembership };
