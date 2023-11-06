@@ -1,5 +1,7 @@
+// install npm packages
 const mongoose = require("mongoose");
 
+// creation of the membership plan
 const membershipSchema = new mongoose.Schema({
     name: {
         type: String
@@ -10,6 +12,7 @@ const membershipSchema = new mongoose.Schema({
     summary: {
         type: String
     }
-}, { timestamps: true });
+}, { timestamps: true }); // timestamps create when the file is created
 
+// export files
 module.exports = mongoose.model('Membership', membershipSchema);

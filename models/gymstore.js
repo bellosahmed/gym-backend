@@ -1,5 +1,7 @@
+// to install npm packages
 const mongoose = require('mongoose');
 
+// creation of the gym store
 const gymstoreSchema = new mongoose.Schema({
     name: {
         type: String
@@ -13,6 +15,7 @@ const gymstoreSchema = new mongoose.Schema({
     description: {
         type: String
     }
-}, { timestamps: true });
+}, { timestamps: true }); // timestamps create when the file is created
 
+// export file
 module.exports = mongoose.model('Gymstores', gymstoreSchema);

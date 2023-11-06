@@ -1,7 +1,9 @@
+// Import of npm packages
 const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 
+// Paths of folders and files
 const db = require('./db');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -9,6 +11,7 @@ const superAdmin = require('./seeders/admin');
 const membershipRoutes = require('./routes/membershipRoutes');
 const gymstoreRoutes = require('./routes/gymstoreRoutes');
 
+// To use files
 dotenv.config();
 db();
 const app = express();
@@ -18,12 +21,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-//Routes
+//Routes 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/member', membershipRoutes);
 app.use('/api/store', gymstoreRoutes);
 
-const port = process.env.PORT || 1111;
+const port = process.env.PORT || 1111; // port will run only 1111ß
 
+// To start the file 
 app.listen(port, () => console.log(`Server is running at ${port}`));
