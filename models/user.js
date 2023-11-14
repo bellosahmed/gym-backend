@@ -1,5 +1,6 @@
 // install npm packages
 const mongoose = require('mongoose');
+const crypto = require('crypto');
 let uniqueValidator = require('mongoose-unique-validator');
 
 // creation of the user
@@ -55,6 +56,7 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true }); // timestamps create when the file is created
 
 userSchema.plugin(uniqueValidator); // to validate user
+
 
 // export User
 module.exports = mongoose.model('Users', userSchema);

@@ -6,6 +6,11 @@ const gymstoreSchema = new mongoose.Schema({
     name: {
         type: String
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
     price: {
         type: String,
     },

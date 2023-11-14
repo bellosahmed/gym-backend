@@ -1,10 +1,12 @@
-// import packages
+// import files
 const Membership = require('../models/membership');
+const User = require('../models/user');
 
-// Create membership plan
+// Create membership plan only admin
 const createMember = async (req, res) => {
     try {
         const { name, price, summary } = req.body;
+        const userId = req.user.id
         if (!name || !price || !summary) {
             return res.status(400).json({ message: 'Please fill all fields' }); // will only create if the fields are complete
         }

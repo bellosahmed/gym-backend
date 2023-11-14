@@ -2,6 +2,8 @@
 const User = require('../models/user');
 const { tokenandcookies } = require('../utilis/jwtandcookies');
 const jwt = require('jsonwebtoken');
+const Otp = require('../models/otp');
+const { sendotp } = require('../utilis/otp')
 
 //Signup User
 const usersignup = async (req, res) => {
@@ -73,13 +75,32 @@ const userlogout = async (req, res) => {
     }
 };
 
+// otp for email
+const userotp = async (req, res) => {
+    const { email, message, subject, duration } = req.body;
+    try {
+        const createdotp = await sendotp({
+            email,
+            subject,
+            message,
+            duration
+        });
+        return res.status(200).json({ createdotp, otpSent: true });
+    } catch (error) {
+        // Handle errors
+        res.status(500).json({ message: error.message });
+        console.log("Error in userotp: ", error.message);
+    }
+};
+
 // forgot password
+const forgotpassword = async (req, res, next) => {
+
+};
 
 
 // reset password
 
 
-// should i include otp to improve security
-
 // to export files
-module.exports = { usersignup, userlogin, userlogout };
+module.exports = { usersignup, userlogin, userlogout, forgotpassword, userotp };

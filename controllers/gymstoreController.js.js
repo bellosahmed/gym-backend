@@ -1,5 +1,6 @@
 // import files
 const Gymstore = require('../models/gymstore');
+const User = require('../models/user');
 
 // Get gym item by id
 const getidgymstore = async (req, res) => {
@@ -32,6 +33,7 @@ const getgymstore = async (req, res) => {
 const creategymstore = async (req, res) => {
     try {
         const { name, price, summary, description } = req.body;
+        const userId = req.user.id;
         if (!name || !price || !summary || !description) {
             return res.status(400).json({ message: 'Please fill all fields' }); // you must fill the fields
         }

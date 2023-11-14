@@ -6,25 +6,16 @@ const jwt = require('jsonwebtoken');
 //Protect Routes
 const protectRoutes = async (req, res, next) => {
     try {
-        const token = req.cookies.jwt;
-
-        if (!token) return res.status(401).json({ message: "Unauthorized" }); // no token will show Unauthorized if the token does match
-
-        const decoded = jwt.verify(token, process.env.jwt_secret); // will verify token or jwt of the user
-
-        const user = await User.findById(decoded.userId).select("-password"); // will find userId expect password
-
-        if (!user) {
-            return res.status(401).json({ message: "User not found" }); // only when sign in will show user
-        }
-
-        req.user = user; // will return user that is signed in
-
-        // to return in terminal if user is sign in 
-        // console.log("Decoded Token:", decoded);
-        // console.log("User Object:", req.user);
-
-        next();
+        const token = req.headers.authorization;
+        //check for token
+        if (!token) { return res.status(401).json({ status: false, msg: "No token, authorization denied" }) }
+        else {
+            //verify token
+            const decoded = jwt.verify(token, process.env.jwtSecret);
+            //add user from payload
+            req.user = decoded;
+            next();
+        };
     } catch (error) {
         // if there is an error
         res.status(500).json({ message: error.message });
