@@ -1,7 +1,7 @@
 // install npm packages
 const mongoose = require('mongoose');
-const crypto = require('crypto');
-let uniqueValidator = require('mongoose-unique-validator');
+//const crypto = require('crypto');
+//let uniqueValidator = require('mongoose-unique-validator');
 
 // creation of the user
 const userSchema = new mongoose.Schema({
@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true // email can't be the same with others
     },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
     username: {
         type: String,
         //required: true,
@@ -24,6 +28,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         // required: true,
         minlenght: 5 // lenght of the password
+    },
+    otp: {
+        type: String
+    },
+    phonenum: {
+        type: String
     },
     height: {
         type: Number
@@ -55,7 +65,7 @@ const userSchema = new mongoose.Schema({
     }
 }, { timestamps: true }); // timestamps create when the file is created
 
-userSchema.plugin(uniqueValidator); // to validate user
+//userSchema.plugin(uniqueValidator); // to validate user
 
 
 // export User

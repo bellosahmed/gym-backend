@@ -3,17 +3,28 @@ const User = require('../models/user');
 
 // User can get their profile  
 const userProfile = async (req, res) => {
-    const userId = req.params.id;
+    let userId = req.params.id;
+
+    // Remove the colon if present at the beginning of the userId
+    // if (userId.startsWith(":")) {
+    //     userId = userId.slice(1);
+    // }
+
     try {
-        const user = await User.findById(userId); // find user by id
-        if (!user) return res.status(400).json({ message: "User not found" }); // if user not found
-        res.status(200).json(user); // will return user as the output
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        res.status(200).json(user);
     } catch (error) {
-        // if there is eeror
+        // if there is an error
         res.status(500).json({ message: error.message });
-        console.log("Error in user Profile", error.message);
+        console.error("Error in user Profile", error.message);
     }
 };
+
 
 
 // Update Profile

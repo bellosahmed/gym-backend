@@ -13,7 +13,6 @@ const membershipRoutes = require('./routes/membershipRoutes');
 const gymstoreRoutes = require('./routes/gymstoreRoutes');
 
 
-
 // To use files
 dotenv.config();
 db();
@@ -36,3 +35,6 @@ const port = process.env.PORT || 1111; // port will run only 1111
 
 // To start the file 
 app.listen(port, () => console.log(`Server is running at ${port}`));
+
+
+

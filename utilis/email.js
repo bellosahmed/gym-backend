@@ -1,32 +1,26 @@
 const nodemailer = require('nodemailer');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
 dotenv.config();
 
-let transporter = nodemailer.createTransport({
-    host: "smtp-mail.outlook.com",
-    auth: {
-        user: process.env.authemail,
-        pass: process.env.authpass
-    }
-});
+const createTransporter = () => {
+    return nodemailer.createTransport({
+        host: 'smtp-mail.outlook.com', // Outlook SMTP server
+        port: 587, // Port for secure TLS connection
+        secure: false, // Upgrade later with STARTTLS
+        auth: {
+            user: process.env.authemail,
+            pass: process.env.authpass,
+        },
+    });
+};
 
-// Test it
-transporter.verify((error, success) => {
-    if (error) {
-        console.log(error)
-    } else {
-        console.log('Ready for message');
-        console.log(success);
-    }
-});
+const createMailOptions = (to, subject, text) => {
+    return {
+        from: process.env.authemail,
+        to,
+        subject,
+        text,
+    };
+};
 
-const sendemail = async (mailOptions) => {
-    try {
-        await transporter.sendMail(mailOptions);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-        console.log("Error in send email: ", error.message);
-    }
-}
-
-module.exports = { sendemail };
+module.exports = { createTransporter, createMailOptions };
