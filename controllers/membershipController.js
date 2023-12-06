@@ -8,7 +8,8 @@ const createMember = async (req, res) => {
         const { name, price, summary } = req.body;
         const userId = req.user.id
         if (!name || !price || !summary) {
-            return res.status(400).json({ message: 'Please fill all fields' }); // will only create if the fields are complete
+            return res.status(400).json({ message: 'Please fill all fields' });
+            // will only create if the fields are complete
         }
 
         let membership = await Membership.findOne({ _id: req.params.id }); // find membership by id
@@ -61,6 +62,14 @@ const updateMembership = async (req, res) => {
         membership.name = name || membership.name;
         membership.price = price || membership.price;
         membership.summary = summary || membership.summary;
+
+        // you can use this 
+        // membership = {
+        //     ...membership,
+        //     name: name || membership.name,
+        //     price: price || membership.price,
+        //     summary: summary || membership.summary
+        //   };
 
         membership = await membership.save(); // to save in the database
         res.status(200).json({ message: 'Plan Updated', membership }) // to get the edited plan 

@@ -4,12 +4,6 @@ const User = require('../models/user');
 // User can get their profile  
 const userProfile = async (req, res) => {
     let userId = req.params.id;
-
-    // Remove the colon if present at the beginning of the userId
-    // if (userId.startsWith(":")) {
-    //     userId = userId.slice(1);
-    // }
-
     try {
         const user = await User.findById(userId);
 
@@ -24,8 +18,6 @@ const userProfile = async (req, res) => {
         console.error("Error in user Profile", error.message);
     }
 };
-
-
 
 // Update Profile
 const updateProfile = async (req, res) => {
@@ -93,5 +85,10 @@ const getAllUsersExceptAdmin = async (req, res) => {
 
 
 // Admin can view all users created last month
+
+
+// History of their purchase
+
+// Shedule Appoinment, Trainners, show avaibele equipment, check people that enterinmented gym traffic
 
 module.exports = { userProfile, updateProfile, deleteUser, getAllUsersExceptAdmin };

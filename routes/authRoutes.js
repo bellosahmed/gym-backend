@@ -8,8 +8,6 @@ const router = express.Router();
 router.post('/signup', usersignup); // for user to sign
 router.post('/login', userlogin); // for user to login
 router.post('/logout', userlogout); // for user to logout
-//router.post('/forgotpassword', forgotpassword);
-//router.post('/resetpassword/:resetToken', resetPassword)
 router.post('/verify', verifyuser); // verify user through otp
 router.post('/forgotpass', forgotpass); // send a link to the user email
 router.post('/resetpass', isresetvalid, resetpass); // to reset password

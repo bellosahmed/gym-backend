@@ -6,7 +6,8 @@ const createTransporter = () => {
     return nodemailer.createTransport({
         host: 'smtp-mail.outlook.com', // Outlook SMTP server
         port: 587, // Port for secure TLS connection
-        secure: false, // Upgrade later with STARTTLS
+        secure: true,
+        requireTLS: true,// Upgrade later with STARTTLS
         auth: {
             user: process.env.authemail,
             pass: process.env.authpass,

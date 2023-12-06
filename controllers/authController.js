@@ -5,10 +5,9 @@ const Resttoken = require('../models/resettoken');
 //const { tokenandcookies } = require('../utilis/jwtandcookies');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const Sendchamp = require('sendchamp-sdk');
-const crypto = require('crypto');
-const { signToken } = require('../middlewares/protectRoutes');
 dotenv.config();
+
+const { signToken } = require('../middlewares/protectRoutes');
 const { createTransporter, createMailOptions } = require('../utilis/email');
 const { generateOtp, createRandomBytes } = require('../utilis/helper');
 const { isValidObjectId } = require('mongoose');
@@ -40,12 +39,12 @@ const usersignup = async (req, res) => {
 
         const transporter = createTransporter();
 
-        const textMessage = `Click the following link to reset your password: ${otp}`;
-        const htmlMessage = `<p>Insert the otp code to reset your password:</p><p>${otp}</p>`;
+        const textMessage = `Click the following link to verify your account: ${otp}`;
+        const htmlMessage = `<p>Insert the otp code to verify your account:</p><p>${otp}</p>`;
 
         const mailOptions = createMailOptions(
             newUser.email,
-            'Forgot password',
+            'Verify Account',
             textMessage,
             htmlMessage
         );
@@ -183,11 +182,12 @@ const userlogout = async (req, res) => {
     }
 };
 
+// forgot password
 const forgotpass = async (req, res) => {
     const { email } = req.body;
     try {
         if (!email) {
-            res.status(400).json({ msg: ' Provide valid email ' })
+            res.status(400).json({ msg: ' Provide valid email ' });
         }
 
         const user = await User.findOne({ email });
@@ -230,7 +230,7 @@ const forgotpass = async (req, res) => {
     }
 };
 
-
+// reset password
 const resetpass = async (req, res) => {
     try {
         const { password } = req.body;
@@ -268,83 +268,8 @@ const resetpass = async (req, res) => {
     }
 };
 
-// // forgot password
-// const forgotpassword = async (req, res) => {
-//     try {
-//         const { email } = req.body;
-
-//         if (!email) return res.status(400).json({ msg: 'Provide a valid email' })
-
-//         const user = await User.findOne({ email });
-
-//         if (!user) {
-//             return res.status(404).json({ message: 'User not found' });
-//         }
-
-//         const resetToken = crypto.randomBytes(20).toString('hex');
-//         user.resetPasswordToken = resetToken;
-//         user.resetPasswordExpires = Date.now() + 3600000; // Token expires in 1 hour
-//         await user.save();
-
-//         const resetURL = `http://localhost:1111/api/auth/resetpassword/${resetToken}`;
-
-//         const transporter = createTransporter();
-//         const textMessage = `Click the following link to reset your password: ${resetURL}`;
-//         const htmlMessage = `<p>Click the following link to reset your password:</p><p><a href="${resetURL}">${resetURL}</a></p>`;
-
-//         const mailOptions = createMailOptions(
-//             user.email,
-//             'Password Reset',
-//             textMessage,
-//             htmlMessage
-//         );
-
-//         await transporter.sendMail(mailOptions);
-
-//         res.status(200).json({ message: 'Password reset email sent' });
-//     } catch (error) {
-//         console.error('Error in forgotPassword:', error);
-//         res.status(500).json({ message: error.message });
-//     }
-// };
-
-
-// // reset password
-// const resetPassword = async (req, res) => {
-//     try {
-//         const resetToken = req.params.resetToken;
-//         const { password } = req.body;
-
-//         console.log('Reset Token:', resetToken); // Add this line for debugging
-
-//         if (!resetToken || !password) {
-//             return res.status(400).json({ message: 'Reset token and password are required' });
-//         }
-
-//         const user = await User.findOne({
-//             resetPasswordToken: resetToken,
-//             resetPasswordExpires: { $gt: Date.now() },
-//         });
-
-//         console.log('User:', user); // Add this line for debugging
-
-//         if (!user) {
-//             return res.status(400).json({ message: 'Invalid or expired token' });
-//         }
-
-//         user.password = password;
-//         user.resetPasswordToken = undefined;
-//         user.resetPasswordExpires = undefined;
-
-//         await user.save();
-
-//         res.status(200).json({ message: 'Password reset successfully' });
-//     } catch (error) {
-//         console.error('Error in resetPassword:', error);
-//         res.status(500).json({ message: 'Internal server error' });
-//     }
-// };
 
 // to export files
 module.exports = { usersignup, userlogin, userlogout, verifyuser, forgotpass, resetpass };
 
+// Note fix password it has issue
