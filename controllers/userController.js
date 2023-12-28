@@ -5,7 +5,7 @@ const User = require('../models/user');
 const userProfile = async (req, res) => {
     let userId = req.params.id;
     try {
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).select('-password');
 
         if (!user) {
             return res.status(400).json({ message: "User not found" });
@@ -81,14 +81,37 @@ const getAllUsersExceptAdmin = async (req, res) => {
     }
 };
 
-// Should admin view user's profile
-
 
 // Admin can view all users created last month
-
+const usercreated = async (req, res) => {
+    const date = new Date();
+    const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
+    const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1));
+    try {
+        const user = await Parcel.aggregate([
+            { $match: { createdAt: { $gte: previousMonth } } },
+            {
+                $project: {
+                    month: { $month: "$createdAt" },
+                    users: "$username",
+                },
+            },
+            {
+                $group: {
+                    _id: "$month",
+                    number: "$users",
+                },
+            },
+        ]);
+        res.status(200).json({ user, status: true });
+    } catch (error) {
+        // if there is error
+        console.error('Error in getting user that has been created:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
 
 // History of their purchase
 
-// Shedule Appoinment, Trainners, show avaibele equipment, check people that enterinmented gym traffic
 
-module.exports = { userProfile, updateProfile, deleteUser, getAllUsersExceptAdmin };
+module.exports = { userProfile, updateProfile, deleteUser, getAllUsersExceptAdmin, usercreated };
